@@ -19,6 +19,11 @@ module Mongoriver
       @batch            = opts[:batch]
       @last_read        = {}
       @save_frequency   = opts[:save_frequency] || DEFAULT_SAVE_FREQUENCY
+
+      if opts.has_key? :log4r_yaml_file
+        log.debug("Configuring logger with #{opts[:log4r_yaml_file]}")
+        Mongoriver::Logging.configure_by_yaml(opts[:log4r_yaml_file])
+      end
     end
 
     def tail(opts={})
